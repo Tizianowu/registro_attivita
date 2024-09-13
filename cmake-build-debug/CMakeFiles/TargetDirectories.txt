@@ -1,0 +1,3 @@
+/Users/tizianowu/registro_attivita/cmake-build-debug/CMakeFiles/registro_attivita.dir
+/Users/tizianowu/registro_attivita/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/tizianowu/registro_attivita/cmake-build-debug/CMakeFiles/rebuild_cache.dir
