@@ -17,6 +17,12 @@ private:
     void Setupsizers();
     void CreateShowListControls();
     void Setupfoundsizers();
+    void BindEventHandlers();
+
+    void AddButtonClicked(const wxCommandEvent& evt);
+    void InputEnter(wxCommandEvent&evt);
+
+    void addActivity();
 
     wxPanel* mainPanel;
     wxPanel* AddActivityPanel;

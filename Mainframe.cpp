@@ -8,6 +8,7 @@ MainFrame::MainFrame(const wxString &title) : wxFrame(nullptr, wxID_ANY, title),
     CreateShowListControls();
     Setupsizers();
     Setupfoundsizers();
+    BindEventHandlers();
 }
 
 void MainFrame::CreateControls() {
@@ -144,4 +145,68 @@ void MainFrame::Setupfoundsizers() {
     Sizer->Add(BackButton);
 
     listPanel->SetSizer(Sizer);
+}
+
+
+void MainFrame::BindEventHandlers() {
+    addButton->Bind(wxEVT_BUTTON, &MainFrame::AddButtonClicked, this);
+    inputField->Bind(wxEVT_TEXT_ENTER, &MainFrame::InputEnter, this);
+}
+
+
+
+void MainFrame::AddButtonClicked(const wxCommandEvent &evt) {
+    addActivity();
+}
+
+void MainFrame::InputEnter(wxCommandEvent &evt) {
+    addActivity();
+}
+
+
+
+
+void MainFrame::addActivity() {
+    wxString description = inputField->GetValue();
+    std::string stdDescription = description.ToStdString();
+    wxDateTime btime = beginTime->GetValue();
+    wxDateTime etime = endTime->GetValue();
+    int begtime = btime.GetHour() * 3600 + btime.GetMinute() * 60 + btime.GetSecond();
+    int endtime = etime.GetHour() * 3600 + etime.GetMinute() * 60 + etime.GetSecond();
+
+    int tempday = day->GetValue();
+    int tempmonth = month->GetValue();
+    int tempoyear = year->GetValue();
+    Data date (tempday,tempmonth,tempoyear);
+    if (date.dataValida(tempday,tempmonth,tempoyear)) {
+        Activity activity(stdDescription, begtime, endtime, date);
+        activities.push_back(activity);
+        desActivityList->Insert(description, desActivityList->GetCount());
+        int Bhours = btime.GetHour();
+        int Bminutes = btime.GetMinute();
+        int Bseconds = btime.GetSecond();
+        wxString BtimeString = wxString::Format("%02d:%02d:%02d", Bhours, Bminutes, Bseconds);
+        begtimeList->Insert(BtimeString, begtimeList->GetCount());
+        int Ehours = etime.GetHour();    // Ottieni l'ora
+        int Eminutes = etime.GetMinute(); // Ottieni i minuti
+        int Eseconds = etime.GetSecond(); // Ottieni i secondi
+        wxString EtimeString = wxString::Format("%02d:%02d:%02d", Ehours, Eminutes, Eseconds);
+        endTimeList->Insert(EtimeString, endTimeList->GetCount());
+        std::string dayStr = std::to_string(tempday);
+        dayList->Insert(dayStr, dayList->GetCount());
+        std::string monthStr = std::to_string(tempmonth);
+        monthList->Insert(monthStr, monthList->GetCount());
+        std::string yearStr = std::to_string(tempoyear);
+        yearList->Insert(yearStr, yearList->GetCount());
+        inputField->Clear();
+        wxDateTime midnight(0,0,0);
+        beginTime->SetValue(midnight);
+        endTime->SetValue(midnight);
+        day->SetValue(0);
+        month->SetValue(0);
+        year->SetValue(0);
+        inputField->SetFocus();
+    } else{
+        wxMessageBox("data non valida");
+    }
 }
