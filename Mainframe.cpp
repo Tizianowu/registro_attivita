@@ -151,6 +151,8 @@ void MainFrame::Setupfoundsizers() {
 void MainFrame::BindEventHandlers() {
     addButton->Bind(wxEVT_BUTTON, &MainFrame::AddButtonClicked, this);
     inputField->Bind(wxEVT_TEXT_ENTER, &MainFrame::InputEnter, this);
+    desActivityList->Bind(wxEVT_KEY_DOWN,&MainFrame::OnListKeyDown,this);
+    clearButton->Bind(wxEVT_BUTTON,&MainFrame::ClearButtonClicked,this);
 }
 
 
@@ -163,6 +165,30 @@ void MainFrame::InputEnter(wxCommandEvent &evt) {
     addActivity();
 }
 
+void MainFrame::OnListKeyDown(wxKeyEvent &evt) {
+    int keyCode = evt.GetKeyCode();
+    int selectedIndex = desActivityList->GetSelection();
+
+    if ((keyCode == WXK_DELETE || keyCode == WXK_BACK) && selectedIndex != wxNOT_FOUND) {
+        deleteSelActivity();
+    }
+}
+
+void MainFrame::ClearButtonClicked(const wxCommandEvent &evt) {
+    if(desActivityList->IsEmpty())
+        return;
+    wxMessageDialog dialog(this,"are you sure you want to clear all?","clear",wxYES_NO | wxCANCEL);
+    int result = dialog.ShowModal();
+    if(result == wxID_YES){
+        desActivityList->Clear();
+        begtimeList->Clear();
+        endTimeList->Clear();
+        dayList->Clear();
+        monthList->Clear();
+        yearList->Clear();
+        activities.clear();
+    }
+}
 
 
 
@@ -208,5 +234,19 @@ void MainFrame::addActivity() {
         inputField->SetFocus();
     } else{
         wxMessageBox("data non valida");
+    }
+}
+
+void MainFrame::deleteSelActivity() {
+    int selectedIndex = desActivityList->GetSelection();
+    if (selectedIndex == wxNOT_FOUND)
+        return;
+    {
+        desActivityList->Delete(selectedIndex);
+        begtimeList->Delete(selectedIndex);
+        endTimeList->Delete(selectedIndex);
+        dayList->Delete(selectedIndex);
+        monthList->Delete(selectedIndex);
+        yearList->Delete(selectedIndex);
     }
 }

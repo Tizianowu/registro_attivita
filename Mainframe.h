@@ -21,8 +21,11 @@ private:
 
     void AddButtonClicked(const wxCommandEvent& evt);
     void InputEnter(wxCommandEvent&evt);
+    void OnListKeyDown(wxKeyEvent &evt);
+    void ClearButtonClicked(const wxCommandEvent& evt);
 
     void addActivity();
+    void deleteSelActivity();
 
     wxPanel* mainPanel;
     wxPanel* AddActivityPanel;
