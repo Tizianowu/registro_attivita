@@ -4,10 +4,13 @@
 
 #ifndef REGISTRO_ATTIVITA_MAINFRAME_H
 #define REGISTRO_ATTIVITA_MAINFRAME_H
+#include <wx/wx.h>
+#include "Register.h"
 
-
-class Mainframe {
-
+class MainFrame : public wxFrame {
+public:
+    explicit MainFrame(const wxString &title);
+private:
 };
 
 
