@@ -15,8 +15,8 @@ public:
 private:
     void CreateControls();
     void Setupsizers();
-
-
+    void CreateShowListControls();
+    void Setupfoundsizers();
 
     wxPanel* mainPanel;
     wxPanel* AddActivityPanel;
@@ -40,6 +40,20 @@ private:
     wxSpinCtrl*  findDay;
     wxSpinCtrl*  findMonth;
     wxSpinCtrl*  findYear;
+
+    wxPanel* listPanel;
+    wxButton* BackButton;
+    wxStaticText* explainingtext;
+    wxListBox* founddescriptionActList;
+    wxListBox* foundbeginList;
+    wxListBox* foundendList;
+    wxListBox* founddayList;
+    wxListBox* foundmonthList;
+    wxListBox* foundyearList;
+
+    vector<Activity>activities;
+    vector<Activity>foundActivities;
+    Register registro;
 };
 
 

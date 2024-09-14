@@ -3,3 +3,14 @@
 //
 
 #include "Register.h"
+
+Register::Register(const std::string &title):registername(title) {
+}
+
+vector<Activity> Register::comparedates(vector<Activity> activities,Data compareDay) {
+    temporaryVec.clear();
+    for (const auto act : activities)
+        if(act.getDay()==compareDay)
+            temporaryVec.push_back(act);
+    return temporaryVec;
+}

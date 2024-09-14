@@ -3,9 +3,11 @@
 //
 
 #include "Mainframe.h"
-MainFrame::MainFrame(const wxString &title) : wxFrame(nullptr, wxID_ANY, title) {
+MainFrame::MainFrame(const wxString &title) : wxFrame(nullptr, wxID_ANY, title), registro("Registro generico") {
     CreateControls();
+    CreateShowListControls();
     Setupsizers();
+    Setupfoundsizers();
 }
 
 void MainFrame::CreateControls() {
@@ -40,6 +42,21 @@ void MainFrame::CreateControls() {
     findYear = new wxSpinCtrl(AddActivityPanel,wxID_ANY,"0000",wxDefaultPosition,wxDefaultSize,wxSP_WRAP,0,2025);
     find = new wxButton(AddActivityPanel,wxID_ANY,"Find",wxDefaultPosition,wxDefaultSize);
 }
+
+
+void MainFrame::CreateShowListControls() {
+    listPanel = new wxPanel(mainPanel);
+    explainingtext = new wxStaticText(listPanel,wxID_ANY,"Activity Description                                                                     Activity Begin Time        Activity End Time        Activity day           Activity month          Activty year      ");
+    BackButton = new wxButton(listPanel,wxID_ANY,"Back");
+    founddescriptionActList = new wxListBox(listPanel, wxID_ANY);
+    foundbeginList = new wxListBox(listPanel, wxID_ANY);
+    foundendList = new wxListBox(listPanel, wxID_ANY);
+    founddayList = new wxListBox(listPanel, wxID_ANY);
+    foundmonthList = new wxListBox(listPanel, wxID_ANY);
+    foundyearList = new wxListBox(listPanel,wxID_ANY);
+    listPanel->Hide();
+}
+
 
 void MainFrame::Setupsizers() {
     wxBoxSizer* mainSizer = new wxBoxSizer(wxVERTICAL);
@@ -97,9 +114,34 @@ void MainFrame::Setupsizers() {
     AddActivityPanel->SetSizer(Sizer);
 
     mainSizer->Add(AddActivityPanel, 1, wxEXPAND | wxALL, 5);
+    mainSizer->Add(listPanel, 1, wxEXPAND | wxALL, 5);
 
     mainPanel->SetSizer(mainSizer);
     mainSizer->SetSizeHints(this);
 
     mainSizer->Layout();
+}
+
+void MainFrame::Setupfoundsizers() {
+    wxBoxSizer* Sizer = new wxBoxSizer(wxVERTICAL);
+
+    Sizer->Add(explainingtext);
+    wxBoxSizer* subSizer = new wxBoxSizer(wxHORIZONTAL);
+    subSizer->Add(founddescriptionActList,wxSizerFlags().Expand().Proportion(3));
+    subSizer->AddSpacer(3);
+    subSizer->Add(foundbeginList,wxSizerFlags().Expand().Proportion(1));
+    subSizer->AddSpacer(3);
+    subSizer->Add(foundendList,wxSizerFlags().Expand().Proportion(1));
+    subSizer->AddSpacer(3);
+    subSizer->Add(founddayList,wxSizerFlags().Expand().Proportion(1));
+    subSizer->AddSpacer(3);
+    subSizer->Add(foundmonthList,wxSizerFlags().Expand().Proportion(1));
+    subSizer->AddSpacer(3);
+    subSizer->Add(foundyearList,wxSizerFlags().Expand().Proportion(1));
+    subSizer->AddSpacer(3);
+    Sizer->Add(subSizer, wxSizerFlags().Expand().Proportion(1));
+    Sizer->AddSpacer(25);
+    Sizer->Add(BackButton);
+
+    listPanel->SetSizer(Sizer);
 }
