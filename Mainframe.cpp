@@ -154,6 +154,8 @@ void MainFrame::BindEventHandlers() {
     inputField->Bind(wxEVT_TEXT_ENTER, &MainFrame::InputEnter, this);
     desActivityList->Bind(wxEVT_KEY_DOWN,&MainFrame::OnListKeyDown,this);
     clearButton->Bind(wxEVT_BUTTON,&MainFrame::ClearButtonClicked,this);
+    find->Bind(wxEVT_BUTTON,&MainFrame::FindActivities,this);
+    BackButton->Bind(wxEVT_BUTTON,&MainFrame::BackButtonClicked,this);
     this->Bind(wxEVT_CLOSE_WINDOW,&MainFrame::WindowClosed,this);
 }
 
@@ -190,6 +192,50 @@ void MainFrame::ClearButtonClicked(const wxCommandEvent &evt) {
         yearList->Clear();
         activities.clear();
     }
+}
+
+void MainFrame::FindActivities(wxCommandEvent &evt) {
+    int day = findDay->GetValue();
+    int month = findMonth->GetValue();
+    int year = findYear->GetValue();
+    Data tempday(day,month,year);
+    if(tempday.dataValida(day,month,year)){
+        foundActivities=registro.comparedates(activities,tempday);
+        if(!foundActivities.empty()){
+            for (const auto& act : foundActivities) {
+                founddescriptionActList->Append(act.getDescription());
+                int beginTime = act.getBegin();
+                int endTime = act.getAnEnd();
+                wxString formattedBegin = secondsToHMS(beginTime);
+                wxString formattedEnd = secondsToHMS(endTime);
+                foundbeginList->Append(formattedBegin);
+                foundendList->Append(formattedEnd);
+                founddayList->Append(std::to_string(act.getDay().getGiorno()));
+                foundmonthList->Append(std::to_string(act.getDay().getMese()));
+                foundyearList->Append(std::to_string(act.getDay().getAnno()));
+            }
+            AddActivityPanel->Hide();
+            listPanel->Show();
+            mainPanel->Layout();
+        }else{
+            wxMessageBox("non attività presenti con questa data");
+        }
+    } else{
+        wxMessageBox("data non valida");
+    }
+}
+
+void MainFrame::BackButtonClicked(wxCommandEvent &evt) {
+    founddescriptionActList->Clear();
+    foundbeginList->Clear();
+    foundendList->Clear();
+    founddayList->Clear();
+    foundmonthList->Clear();
+    foundyearList->Clear();
+    foundActivities.clear();
+    listPanel->Hide();
+    AddActivityPanel->Show();
+    mainPanel->Layout();
 }
 
 void MainFrame::WindowClosed(wxCloseEvent &evt) {
