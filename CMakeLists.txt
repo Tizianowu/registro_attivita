@@ -34,3 +34,5 @@ if(APPLE)
 endif()
 
 target_link_libraries(${PROJECT_NAME} ${wxWidgets_LIBRARIES})
+
+add_subdirectory(testing)
