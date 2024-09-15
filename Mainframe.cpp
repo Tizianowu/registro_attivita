@@ -9,6 +9,7 @@ MainFrame::MainFrame(const wxString &title) : wxFrame(nullptr, wxID_ANY, title),
     Setupsizers();
     Setupfoundsizers();
     BindEventHandlers();
+    Addfromsaved();
 }
 
 void MainFrame::CreateControls() {
@@ -153,6 +154,7 @@ void MainFrame::BindEventHandlers() {
     inputField->Bind(wxEVT_TEXT_ENTER, &MainFrame::InputEnter, this);
     desActivityList->Bind(wxEVT_KEY_DOWN,&MainFrame::OnListKeyDown,this);
     clearButton->Bind(wxEVT_BUTTON,&MainFrame::ClearButtonClicked,this);
+    this->Bind(wxEVT_CLOSE_WINDOW,&MainFrame::WindowClosed,this);
 }
 
 
@@ -188,6 +190,47 @@ void MainFrame::ClearButtonClicked(const wxCommandEvent &evt) {
         yearList->Clear();
         activities.clear();
     }
+}
+
+void MainFrame::WindowClosed(wxCloseEvent &evt) {
+    std::vector<Activity> activities;
+
+    int count = desActivityList->GetCount();
+    for (int i = 0; i < count; i++) {
+        // Extract data from each list at index i
+        wxString description = desActivityList->GetString(i);
+        std::string begtimeStr = begtimeList->GetString(i).ToStdString();
+        std::string endtimeStr = endTimeList->GetString(i).ToStdString();
+
+        // Parsing the hh:mm:ss format for begin time
+        int beginHours = std::stoi(begtimeStr.substr(0, 2));
+        int beginMinutes = std::stoi(begtimeStr.substr(3, 2));
+        int beginSeconds = std::stoi(begtimeStr.substr(6, 2));
+
+        // Convert hh:mm:ss into total seconds for begin time
+        int begin = (beginHours * 3600) + (beginMinutes * 60) + beginSeconds;
+
+        // Parsing the hh:mm:ss format for end time
+        int endHours = std::stoi(endtimeStr.substr(0, 2));
+        int endMinutes = std::stoi(endtimeStr.substr(3, 2));
+        int endSeconds = std::stoi(endtimeStr.substr(6, 2));
+
+        // Convert hh:mm:ss into total seconds for end time
+        int end = (endHours * 3600) + (endMinutes * 60) + endSeconds;
+        int day = std::stoi(dayList->GetString(i).ToStdString());
+        int month = std::stoi(monthList->GetString(i).ToStdString());
+        int year = std::stoi(yearList->GetString(i).ToStdString());
+
+        std::string stdDescription = std::string(description.mb_str());
+        std::replace(stdDescription.begin(), stdDescription.end(), '_', ' ');
+
+        Data activity_day(day, month, year);
+        Activity activity(stdDescription, begin, end, activity_day);
+
+        activities.push_back(activity);
+    }
+    saveFile(activities, "activities.txt");
+    evt.Skip();
 }
 
 
@@ -250,3 +293,63 @@ void MainFrame::deleteSelActivity() {
         yearList->Delete(selectedIndex);
     }
 }
+
+
+void MainFrame::Addfromsaved() {
+    activities = loadFile("activities.txt");
+    std::vector<Activity>tasks = loadFile("activities.txt");
+    for (const Activity& task : tasks) {
+        int index = desActivityList->GetCount();
+        desActivityList->Insert(task.getDescription(), index);
+        int beginTimestamp = task.getBegin();  // task.getBegin() restituisce un intero (es: secondi)
+        int Bhours = beginTimestamp / 3600;
+        int Bminutes = (beginTimestamp % 3600) / 60;
+        int Bseconds = beginTimestamp % 60;
+        wxString beginTimeWx = wxString::Format("%02d:%02d:%02d", Bhours, Bminutes, Bseconds);
+        begtimeList->Insert(beginTimeWx,index);// task.getBegin() restituisce un intero (es: secondi)
+        int endTimestamp = task.getAnEnd();
+        int Ehours = endTimestamp / 3600;
+        int Eminutes = (endTimestamp % 3600) / 60;
+        int Eseconds = endTimestamp % 60;
+        wxString endTimeWx = wxString::Format("%02d:%02d:%02d", Ehours, Eminutes, Eseconds);
+        endTimeList->Insert(endTimeWx,index);
+        std::string dayStr = std::to_string(task.getDay().getGiorno());
+        dayList->Insert(dayStr,index);
+        std::string monthStr = std::to_string(task.getDay().getMese());
+        monthList->Insert(monthStr,index);
+        std::string yearStr = std::to_string(task.getDay().getAnno());
+        yearList->Insert(yearStr,index);
+    }
+}
+
+void MainFrame::saveFile(const std::vector<Activity> &activities, const std::string &filename) {
+    std::ofstream ostream(filename);
+    ostream << activities.size();
+    for (const Activity& activity : activities) {
+        std::string description = activity.getDescription();
+        std::replace(description.begin(), description.end(), ' ', '_');
+        ostream << '\n' << description << ' ' << activity.getBegin() << ' ' << activity.getAnEnd() << ' ' << activity.getDay().getGiorno() << ' ' << activity.getDay().getMese() << ' ' << activity.getDay().getAnno();
+    }
+}
+
+std::vector<Activity> MainFrame::loadFile(const std::string &filename) {
+    if (!std::filesystem::exists(filename)) {
+        return std::vector<Activity>();
+    }
+    std::vector<Activity> activities;
+    std::ifstream istream(filename);
+    int n;
+    istream >> n;
+    for (int i = 0; i < n; i++) {
+        std::string description;
+        int begin, end;
+        int day, month, year;
+        // Read the fields from the file
+        istream >> description >> begin >> end >> day >> month >> year;
+        std::replace(description.begin(), description.end(), '_', ' ');
+        Data activity_day(day, month, year);
+        activities.emplace_back(description, begin, end, activity_day);
+    }
+    return activities;
+}
+

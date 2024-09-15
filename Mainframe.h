@@ -7,6 +7,8 @@
 #include <wx/wx.h>
 #include <wx/spinctrl.h>
 #include <wx/timectrl.h>
+#include <filesystem>
+#include <fstream>
 #include "Register.h"
 
 class MainFrame : public wxFrame {
@@ -23,6 +25,11 @@ private:
     void InputEnter(wxCommandEvent&evt);
     void OnListKeyDown(wxKeyEvent &evt);
     void ClearButtonClicked(const wxCommandEvent& evt);
+    void WindowClosed(wxCloseEvent& evt);
+
+    void saveFile(const std::vector<Activity> &lists, const std::string &filename);
+    std::vector<Activity>loadFile(const std::string &filename);
+    void Addfromsaved();
 
     void addActivity();
     void deleteSelActivity();
