@@ -1,12 +1,21 @@
 # ninja log v6
 10	533	1726318730686809581	CMakeFiles/registro_attivita.dir/Activity.cpp.o	196c20f076f752b7
 5	1128	1726389856903717505	CMakeFiles/registro_attivita.dir/App.cpp.o	99f61dff006bda01
+8	175	1726390685003774169	testing/CMakeFiles/UnitTest.dir/ActivityTest.cpp.o	26236dc5a7afc8d5
 2	510	1726390455559708173	testing/CMakeFiles/UnitTest.dir/RunAllTest.cpp.o	aaa224b30fe4aa74
 11	579	1726318730688036246	CMakeFiles/registro_attivita.dir/Register.cpp.o	885472d2d7db27d5
-1371	1532	1726390456928528171	testing/UnitTest	ac5de85d6530fe16
 3	346	1726247020421096336	CMakeFiles/registro_attivita.dir/Day.cpp.o	126b937cd6fc1167
 6	1138	1726390215229484530	CMakeFiles/registro_attivita.dir/Mainframe.cpp.o	d95b929eb27b29e2
 2	1330	1726390455559456120	testing/lib/googletest/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.o	5216a2450f235e2f
-5	24	1726313309801108929	CMakeFiles/registro_attivita.dir/main.cpp.o	80804fa66ff7bbbe
+36	187	1726390819539521682	testing/UnitTest	fea9cadb31868806
 1139	1297	1726390216362381336	registro_attivita	3452eea018b15971
 1330	1371	1726390456887303658	lib/libgtest.a	50cd3b761d2f4e79
+5	24	1726313309801108929	CMakeFiles/registro_attivita.dir/main.cpp.o	80804fa66ff7bbbe
+8	636	1726390797503840093	testing/CMakeFiles/UnitTest.dir/DayTest.cpp.o	41a023dfa28e5f2d
+5	36	1726390819508767392	testing/CMakeFiles/UnitTest.dir/RegisterTest.cpp.o	715cd850cd8897d6
+8	129	1726390908547928550	testing/CMakeFiles/UnitTest.dir/RegisterTest.cpp.o	715cd850cd8897d6
+7	689	1726390908546911884	testing/CMakeFiles/UnitTest.dir/DayTest.cpp.o	41a023dfa28e5f2d
+8	713	1726390908547506967	testing/CMakeFiles/UnitTest.dir/ActivityTest.cpp.o	26236dc5a7afc8d5
+713	913	1726390909253124620	testing/UnitTest	fea9cadb31868806
+12	606	1726391002370348913	testing/CMakeFiles/UnitTest.dir/RegisterTest.cpp.o	715cd850cd8897d6
+606	796	1726391002964597325	testing/UnitTest	fea9cadb31868806

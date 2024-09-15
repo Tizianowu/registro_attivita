@@ -16,6 +16,9 @@ message("gtest_SOURCE_DIR is set to: ${gtest_SOURCE_DIR}")
 message("Include directories are: ${gtest_SOURCE_DIR}/include")
 
 set(TEST_SOURCE_FILES
+        DayTest.cpp
+        ActivityTest.cpp
+        RegisterTest.cpp
 )
 add_executable(UnitTest
         RunAllTest.cpp
