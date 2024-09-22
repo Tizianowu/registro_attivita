@@ -190,7 +190,7 @@ void MainFrame::ClearButtonClicked(const wxCommandEvent &evt) {
         dayList->Clear();
         monthList->Clear();
         yearList->Clear();
-        activities.clear();
+        registro.clearActivities();
     }
 }
 
@@ -200,7 +200,7 @@ void MainFrame::FindActivities(wxCommandEvent &evt) {
     int year = findYear->GetValue();
     Data tempday(day,month,year);
     if(tempday.dataValida(day,month,year)){
-        foundActivities=registro.comparedates(activities,tempday);
+        foundActivities=registro.comparedates(tempday);
         if(!foundActivities.empty()){
             for (const auto& act : foundActivities) {
                 founddescriptionActList->Append(act.getDescription());
@@ -296,7 +296,7 @@ void MainFrame::addActivity() {
     if(begtime<=endtime){
         if (date.dataValida(tempday,tempmonth,tempoyear)) {
             Activity activity(stdDescription, begtime, endtime, date);
-            activities.push_back(activity);
+            registro.addActivity(activity);
             desActivityList->Insert(description, desActivityList->GetCount());
             int Bhours = btime.GetHour();
             int Bminutes = btime.GetMinute();
@@ -335,19 +335,46 @@ void MainFrame::deleteSelActivity() {
     int selectedIndex = desActivityList->GetSelection();
     if (selectedIndex == wxNOT_FOUND)
         return;
-    {
+    else{
+        int day = wxAtoi(dayList->GetString(selectedIndex));
+        int month = wxAtoi(monthList->GetString(selectedIndex));
+        int year = wxAtoi(yearList->GetString(selectedIndex));
+        Data dat(day, month, year);
+
+        // Estrarre l'orario di inizio (hh:mm:ss) e convertirlo in secondi
+        wxString btimeString = begtimeList->GetString(selectedIndex);
+        long Bhours, Bminutes, Bseconds;
+        btimeString.BeforeFirst(':').ToLong(&Bhours);
+        btimeString.AfterFirst(':').BeforeFirst(':').ToLong(&Bminutes);
+        btimeString.AfterLast(':').ToLong(&Bseconds);
+
+        // Convertire l'orario di inizio in secondi
+        int begintimeInSeconds = (Bhours * 3600) + (Bminutes * 60) + Bseconds;
+
+        wxString etimeString = endTimeList->GetString(selectedIndex);
+        long Ehours, Eminutes, Eseconds;
+        etimeString.BeforeFirst(':').ToLong(&Ehours);
+        etimeString.AfterFirst(':').BeforeFirst(':').ToLong(&Eminutes);
+        etimeString.AfterLast(':').ToLong(&Eseconds);
+
+        int endtimeInSeconds = (Ehours * 3600) + (Eminutes * 60) + Eseconds;
+        Activity act(desActivityList->GetString(selectedIndex).ToStdString(), begintimeInSeconds,endtimeInSeconds,dat);
         desActivityList->Delete(selectedIndex);
         begtimeList->Delete(selectedIndex);
         endTimeList->Delete(selectedIndex);
         dayList->Delete(selectedIndex);
         monthList->Delete(selectedIndex);
         yearList->Delete(selectedIndex);
+        registro.deleteSelectedActivity(act);
     }
 }
 
 
 void MainFrame::Addfromsaved() {
-    activities = loadFile("activities.txt");
+    vector<Activity>tempVec = loadFile("activities.txt");
+    for(const auto act : tempVec) {
+        registro.addActivity(act);
+    }
     std::vector<Activity>tasks = loadFile("activities.txt");
     for (const Activity& task : tasks) {
         int index = desActivityList->GetCount();

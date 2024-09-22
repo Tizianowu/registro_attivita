@@ -11,9 +11,23 @@ class Register {
 public:
     Register(const string &title);
 
-    vector<Activity> comparedates(vector<Activity> activities,Data compareDay);
+    vector<Activity> comparedates(const Data& compareDay);
+
+    void addActivity(Activity act){
+        activities.push_back(act);
+    }
+    void deleteSelectedActivity(Activity act){
+        auto it = std::find(activities.begin(), activities.end(), act);
+        if (it != activities.end()) {
+            activities.erase(it);
+        }
+    }
+    void clearActivities(){
+        activities.clear();
+    };
 private:
 
+    vector<Activity> activities;
     string registername;
     vector<Activity> temporaryVec;
 };

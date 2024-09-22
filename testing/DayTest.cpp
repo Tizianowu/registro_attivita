@@ -3,7 +3,7 @@
 //
 //
 #include <gtest/gtest.h>
-#include "../Day.cpp"
+#include "../Day.h"
 TEST(DataTest, TestGiorniNelMese) {
     Data d;
     EXPECT_EQ(d.giorniNelMese(1, 2024), 31);  // Gennaio ha 31 giorni
