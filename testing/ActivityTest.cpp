@@ -2,7 +2,7 @@
 // Created by Tiziano Wu on 15/09/24.
 //
 #include <gtest/gtest.h>
-#include "../Activity.cpp"
+#include "../Activity.h"
 TEST(ActivityTest, ConstructorAndGetters) {
     Data date(15, 8, 2024);
     Activity activity("Test Activity", 1200, 1300, date);

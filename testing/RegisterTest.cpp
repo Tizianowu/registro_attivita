@@ -2,7 +2,7 @@
 // Created by Tiziano Wu on 15/09/24.
 //
 #include <gtest/gtest.h>
-#include "../Register.cpp"
+#include "../Register.h"
 
 class RegisterTest : public ::testing::Test {
 protected:

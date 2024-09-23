@@ -3,8 +3,15 @@
 //
 
 #include "Activity.h"
-Activity::Activity(std::string description, int begintime, int endtime,Data act_day): description(description),begin(begintime),
-                                                                                      end(endtime),day(act_day) {}
+Activity::Activity(std::string description, int begintime, int endtime,Data act_day): description(description),day(act_day) {
+    if(begintime<endtime){
+        begin=begintime;
+        end=endtime;
+    }
+    else{
+        throw std::invalid_argument("Errore: l'orario di inizio deve essere inferiore all'orario di fine.");
+    }
+}
 
 const Data &Activity::getDay() const {
     return day;

@@ -17,6 +17,8 @@ message("Include directories are: ${gtest_SOURCE_DIR}/include")
 
 set(TEST_SOURCE_FILES
         ../Day.cpp
+        ../Activity.cpp
+        ../Register.cpp
         DayTest.cpp
         ActivityTest.cpp
         RegisterTest.cpp

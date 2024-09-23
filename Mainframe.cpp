@@ -4,12 +4,12 @@
 
 #include "Mainframe.h"
 MainFrame::MainFrame(const wxString &title) : wxFrame(nullptr, wxID_ANY, title), registro("Registro generico") {
-    CreateControls();
-    CreateShowListControls();
-    Setupsizers();
-    Setupfoundsizers();
-    BindEventHandlers();
-    Addfromsaved();
+        CreateControls();
+        CreateShowListControls();
+        Setupsizers();
+        Setupfoundsizers();
+        BindEventHandlers();
+        Addfromsaved();
 }
 
 void MainFrame::CreateControls() {
@@ -198,31 +198,37 @@ void MainFrame::FindActivities(wxCommandEvent &evt) {
     int day = findDay->GetValue();
     int month = findMonth->GetValue();
     int year = findYear->GetValue();
+    try{
     Data tempday(day,month,year);
     if(tempday.dataValida(day,month,year)){
-        foundActivities=registro.comparedates(tempday);
-        if(!foundActivities.empty()){
-            for (const auto& act : foundActivities) {
-                founddescriptionActList->Append(act.getDescription());
-                int beginTime = act.getBegin();
-                int endTime = act.getAnEnd();
-                wxString formattedBegin = secondsToHMS(beginTime);
-                wxString formattedEnd = secondsToHMS(endTime);
-                foundbeginList->Append(formattedBegin);
-                foundendList->Append(formattedEnd);
-                founddayList->Append(std::to_string(act.getDay().getGiorno()));
-                foundmonthList->Append(std::to_string(act.getDay().getMese()));
-                foundyearList->Append(std::to_string(act.getDay().getAnno()));
+            foundActivities = registro.comparedates(tempday);
+            if (!foundActivities.empty()) {
+                for (const auto &act: foundActivities) {
+                    founddescriptionActList->Append(act.getDescription());
+                    int beginTime = act.getBegin();
+                    int endTime = act.getAnEnd();
+                    wxString formattedBegin = secondsToHMS(beginTime);
+                    wxString formattedEnd = secondsToHMS(endTime);
+                    foundbeginList->Append(formattedBegin);
+                    foundendList->Append(formattedEnd);
+                    founddayList->Append(std::to_string(act.getDay().getGiorno()));
+                    foundmonthList->Append(std::to_string(act.getDay().getMese()));
+                    foundyearList->Append(std::to_string(act.getDay().getAnno()));
+                }
+                AddActivityPanel->Hide();
+                listPanel->Show();
+                mainPanel->Layout();
             }
-            AddActivityPanel->Hide();
-            listPanel->Show();
-            mainPanel->Layout();
-        }else{
-            wxMessageBox("non attività presenti con questa data");
-        }
-    } else{
-        wxMessageBox("data non valida");
+            } else {
+                wxMessageBox("non attività presenti con questa data");
+            }
+    }catch (const std::invalid_argument& e) {
+        wxMessageBox(wxString::Format("Errore durante l'inizializzazione: %s", e.what()));
     }
+    catch (...) {
+        wxMessageBox("Errore sconosciuto durante l'inizializzazione.");
+    }
+
 }
 
 void MainFrame::BackButtonClicked(wxCommandEvent &evt) {
@@ -292,9 +298,9 @@ void MainFrame::addActivity() {
     int tempday = day->GetValue();
     int tempmonth = month->GetValue();
     int tempoyear = year->GetValue();
+    try{
     Data date (tempday,tempmonth,tempoyear);
-    if(begtime<=endtime){
-        if (date.dataValida(tempday,tempmonth,tempoyear)) {
+        if (date.dataValida(tempday, tempmonth, tempoyear)) {
             Activity activity(stdDescription, begtime, endtime, date);
             registro.addActivity(activity);
             desActivityList->Insert(description, desActivityList->GetCount());
@@ -323,12 +329,12 @@ void MainFrame::addActivity() {
             year->SetValue(0);
             inputField->SetFocus();
         }
-        else{
-            wxMessageBox("data non valida");
+        }catch (const std::invalid_argument& e) {
+            wxMessageBox(wxString::Format("Errore durante l'inizializzazione: %s", e.what()));
         }
-    } else{
-        wxMessageBox("orario non valido");
-    }
+        catch (...) {
+            wxMessageBox("Errore sconosciuto durante l'inizializzazione.");
+        }
 }
 
 void MainFrame::deleteSelActivity() {

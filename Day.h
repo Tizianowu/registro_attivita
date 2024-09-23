@@ -6,10 +6,6 @@
 #include <iostream>
 
 class Data {
-private:
-    int day;
-    int month;
-    int year;
 public:
     Data() : day(1), month(1), year(1970) {};
     Data(int giorno, int mese, int anno) {
@@ -18,15 +14,10 @@ public:
             this->month = mese;
             this->year = anno;
         } else {
-            std::cerr << "Errore: data non valida!" << std::endl;
+            throw std::invalid_argument("Errore: data non valida!");
         }
     }
-
-    bool isBisestile(int anno) const {
-        return ((anno % 4 == 0 && anno % 100 != 0) || (anno % 400 == 0));}
-    int giorniNelMese(int mese, int anno) const;
     bool dataValida(int giorno, int mese, int anno) const;
-    bool operator==(const Data& altraData) const;
 
     int getGiorno() const {
         return day;
@@ -37,6 +28,16 @@ public:
     int getAnno() const {
         return year;
     }
+    bool operator==(const Data& altraData) const;
+private:
+    int giorniNelMese(int mese, int anno) const;
+    bool isBisestile(int anno) const {
+        return ((anno % 4 == 0 && anno % 100 != 0) || (anno % 400 == 0));
+    }
+    int day;
+    int month;
+    int year;
 };
+
 
 #endif //REGISTRO_GIORNO_DAY_H
