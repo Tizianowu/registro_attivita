@@ -15,10 +15,12 @@ TEST(ActivityTest, ConstructorAndGetters) {
     EXPECT_EQ(activity.getDay().getAnno(), 2024);
 }
 
-// Test per la validità dei dati
-TEST(ActivityTest, CheckDataValidity) {
-    Data validDate(15, 8, 2024);
-    Data invalidDate(31, 2, 2024);  // Febbraio 31 non è valido
+TEST(ActivityTest, CreateActivitySuccess) {
+    Data validDate(13,9,2024); // Example date
+    EXPECT_NO_THROW(Activity activity("Test Activity", 10, 12, validDate));
+}
 
-    EXPECT_TRUE(validDate.dataValida(15, 8, 2024));
+TEST(ActivityTest, CreateActivityThrowsOnInvalidTime) {
+    Data validDate(13,9,2024);
+    EXPECT_THROW(Activity activity("Invalid Activity", 12, 10, validDate), std::invalid_argument);
 }
