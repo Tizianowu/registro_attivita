@@ -16,9 +16,9 @@ public:
     explicit MainFrame(const wxString &title);
 private:
     void CreateControls();
-    void Setupsizers();
+    void SetupSizers();
     void CreateShowListControls();
-    void Setupfoundsizers();
+    void SetupFoundSizers();
     void BindEventHandlers();
 
     void AddButtonClicked(const wxCommandEvent& evt);
@@ -31,13 +31,14 @@ private:
 
     void saveFile(const std::vector<Activity> &lists, const std::string &filename);
     std::vector<Activity>loadFile(const std::string &filename);
-    void Addfromsaved();
+    void addFromSaved();
+
 
     void addActivity();
     void deleteSelActivity();
 
     wxPanel* mainPanel;
-    wxPanel* AddActivityPanel;
+    wxPanel* addActivityPanel;
     wxButton* addButton;
     wxStaticText* headlineText;
     wxStaticText* infoText;
@@ -49,7 +50,7 @@ private:
     wxSpinCtrl*  year;
     wxButton* clearButton;
     wxListBox* desActivityList;
-    wxListBox* begtimeList;
+    wxListBox* begTimeList;
     wxListBox* endTimeList;
     wxListBox* dayList;
     wxListBox* monthList;
@@ -61,13 +62,13 @@ private:
 
     wxPanel* listPanel;
     wxButton* BackButton;
-    wxStaticText* explainingtext;
-    wxListBox* founddescriptionActList;
-    wxListBox* foundbeginList;
-    wxListBox* foundendList;
-    wxListBox* founddayList;
-    wxListBox* foundmonthList;
-    wxListBox* foundyearList;
+    wxStaticText* explainingText;
+    wxListBox* foundDescriptionActList;
+    wxListBox* foundBeginList;
+    wxListBox* foundEndList;
+    wxListBox* foundDayList;
+    wxListBox* foundMonthList;
+    wxListBox* foundYearList;
 
     vector<Activity>activities;
     vector<Activity>foundActivities;

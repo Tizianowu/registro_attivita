@@ -4,10 +4,10 @@
 
 #include "Register.h"
 
-Register::Register(const std::string &title):registername(title) {
+Register::Register(const std::string &title): registerName(title) {
 }
 
-vector<Activity> Register::comparedates(const Data& compareDay) {
+vector<Activity> Register::compareDates(const Data& compareDay) {
     temporaryVec.clear();
     for (const auto act : activities)
         if(act.getDay()==compareDay)

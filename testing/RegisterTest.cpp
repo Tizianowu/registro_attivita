@@ -23,7 +23,7 @@ TEST_F(RegisterTest, AddActivity) {
 
     registerInstance->addActivity(activity);
 
-    std::vector<Activity> activities = registerInstance->comparedates(day);
+    std::vector<Activity> activities = registerInstance->compareDates(day);
     ASSERT_EQ(activities.size(), 1);
     EXPECT_EQ(activities[0].getDescription(), "Test Activity");
 }
@@ -37,7 +37,7 @@ TEST_F(RegisterTest, CompareDates) {
     registerInstance->addActivity(activity1);
     registerInstance->addActivity(activity2);
 
-    std::vector<Activity> activities = registerInstance->comparedates(day1);
+    std::vector<Activity> activities = registerInstance->compareDates(day1);
     ASSERT_EQ(activities.size(), 1);
     EXPECT_EQ(activities[0].getDescription(), "Activity 1");
 }
@@ -49,7 +49,7 @@ TEST_F(RegisterTest, DeleteSelectedActivity) {
     registerInstance->addActivity(activity);
     registerInstance->deleteSelectedActivity(activity);
 
-    std::vector<Activity> activities = registerInstance->comparedates(day);
+    std::vector<Activity> activities = registerInstance->compareDates(day);
     ASSERT_EQ(activities.size(), 0);
 }
 
@@ -62,6 +62,6 @@ TEST_F(RegisterTest, ClearActivities) {
     registerInstance->addActivity(activity2);
     registerInstance->clearActivities();
 
-    std::vector<Activity> activities = registerInstance->comparedates(day);
+    std::vector<Activity> activities = registerInstance->compareDates(day);
     ASSERT_EQ(activities.size(), 0);
 }

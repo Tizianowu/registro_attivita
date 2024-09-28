@@ -6,10 +6,10 @@
 MainFrame::MainFrame(const wxString &title) : wxFrame(nullptr, wxID_ANY, title), registro("Registro generico") {
         CreateControls();
         CreateShowListControls();
-        Setupsizers();
-        Setupfoundsizers();
+    SetupSizers();
+    SetupFoundSizers();
         BindEventHandlers();
-        Addfromsaved();
+    addFromSaved();
 }
 
 void MainFrame::CreateControls() {
@@ -19,48 +19,48 @@ void MainFrame::CreateControls() {
     mainPanel = new wxPanel(this);
     mainPanel->SetFont(mainFont);
 
-    AddActivityPanel = new wxPanel(mainPanel);
-    addButton = new wxButton(AddActivityPanel,wxID_ANY,"Add");
-    headlineText = new wxStaticText(AddActivityPanel,wxID_ANY,"LISTA ATTIVITA");
+    addActivityPanel = new wxPanel(mainPanel);
+    addButton = new wxButton(addActivityPanel, wxID_ANY, "Add");
+    headlineText = new wxStaticText(addActivityPanel, wxID_ANY, "LISTA ATTIVITA");
     headlineText->SetFont(headlineFont);
-    infoText = new wxStaticText(AddActivityPanel,wxID_ANY,"begintime  endtime   day    month    year                               ");
-    inputField = new wxTextCtrl(AddActivityPanel, wxID_ANY, "", wxDefaultPosition, wxDefaultSize,wxTE_PROCESS_ENTER);
-    clearButton = new wxButton(AddActivityPanel, wxID_ANY, "Clear", wxDefaultPosition, wxDefaultSize);
-    desActivityList = new wxListBox(AddActivityPanel, wxID_ANY);
-    begtimeList = new wxListBox(AddActivityPanel, wxID_ANY);
-    endTimeList = new wxListBox(AddActivityPanel, wxID_ANY);
-    dayList = new wxListBox(AddActivityPanel, wxID_ANY);
-    monthList = new wxListBox(AddActivityPanel, wxID_ANY);
-    yearList = new wxListBox(AddActivityPanel,wxID_ANY);
+    infoText = new wxStaticText(addActivityPanel, wxID_ANY, "begintime  endtime   day    month    year                               ");
+    inputField = new wxTextCtrl(addActivityPanel, wxID_ANY, "", wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
+    clearButton = new wxButton(addActivityPanel, wxID_ANY, "Clear", wxDefaultPosition, wxDefaultSize);
+    desActivityList = new wxListBox(addActivityPanel, wxID_ANY);
+    begTimeList = new wxListBox(addActivityPanel, wxID_ANY);
+    endTimeList = new wxListBox(addActivityPanel, wxID_ANY);
+    dayList = new wxListBox(addActivityPanel, wxID_ANY);
+    monthList = new wxListBox(addActivityPanel, wxID_ANY);
+    yearList = new wxListBox(addActivityPanel, wxID_ANY);
     wxDateTime midnight(0,0,0);
-    beginTime = new wxTimePickerCtrl(AddActivityPanel,wxID_ANY,midnight,wxDefaultPosition,wxDefaultSize);
-    endTime= new wxTimePickerCtrl(AddActivityPanel,wxID_ANY,midnight,wxDefaultPosition,wxDefaultSize);
-    day = new wxSpinCtrl(AddActivityPanel,wxID_ANY,"0000",wxDefaultPosition,wxDefaultSize,wxSP_WRAP,0,31);
-    month = new wxSpinCtrl(AddActivityPanel,wxID_ANY,"0000",wxDefaultPosition,wxDefaultSize,wxSP_WRAP,0,12);
-    year = new wxSpinCtrl(AddActivityPanel,wxID_ANY,"0000",wxDefaultPosition,wxDefaultSize,wxSP_WRAP,0,2025);
+    beginTime = new wxTimePickerCtrl(addActivityPanel, wxID_ANY, midnight, wxDefaultPosition, wxDefaultSize);
+    endTime= new wxTimePickerCtrl(addActivityPanel, wxID_ANY, midnight, wxDefaultPosition, wxDefaultSize);
+    day = new wxSpinCtrl(addActivityPanel, wxID_ANY, "0000", wxDefaultPosition, wxDefaultSize, wxSP_WRAP, 0, 31);
+    month = new wxSpinCtrl(addActivityPanel, wxID_ANY, "0000", wxDefaultPosition, wxDefaultSize, wxSP_WRAP, 0, 12);
+    year = new wxSpinCtrl(addActivityPanel, wxID_ANY, "0000", wxDefaultPosition, wxDefaultSize, wxSP_WRAP, 0, 2025);
 
-    findDay = new wxSpinCtrl(AddActivityPanel,wxID_ANY,"0000",wxDefaultPosition,wxDefaultSize,wxSP_WRAP,0,31);
-    findMonth = new wxSpinCtrl(AddActivityPanel,wxID_ANY,"0000",wxDefaultPosition,wxDefaultSize,wxSP_WRAP,0,12);
-    findYear = new wxSpinCtrl(AddActivityPanel,wxID_ANY,"0000",wxDefaultPosition,wxDefaultSize,wxSP_WRAP,0,2025);
-    find = new wxButton(AddActivityPanel,wxID_ANY,"Find",wxDefaultPosition,wxDefaultSize);
+    findDay = new wxSpinCtrl(addActivityPanel, wxID_ANY, "0000", wxDefaultPosition, wxDefaultSize, wxSP_WRAP, 0, 31);
+    findMonth = new wxSpinCtrl(addActivityPanel, wxID_ANY, "0000", wxDefaultPosition, wxDefaultSize, wxSP_WRAP, 0, 12);
+    findYear = new wxSpinCtrl(addActivityPanel, wxID_ANY, "0000", wxDefaultPosition, wxDefaultSize, wxSP_WRAP, 0, 2025);
+    find = new wxButton(addActivityPanel, wxID_ANY, "Find", wxDefaultPosition, wxDefaultSize);
 }
 
 
 void MainFrame::CreateShowListControls() {
     listPanel = new wxPanel(mainPanel);
-    explainingtext = new wxStaticText(listPanel,wxID_ANY,"Activity Description                                                                     Activity Begin Time        Activity End Time        Activity day           Activity month          Activty year      ");
+    explainingText = new wxStaticText(listPanel, wxID_ANY, "Activity Description                                                                     Activity Begin Time        Activity End Time        Activity day           Activity month          Activty year      ");
     BackButton = new wxButton(listPanel,wxID_ANY,"Back");
-    founddescriptionActList = new wxListBox(listPanel, wxID_ANY);
-    foundbeginList = new wxListBox(listPanel, wxID_ANY);
-    foundendList = new wxListBox(listPanel, wxID_ANY);
-    founddayList = new wxListBox(listPanel, wxID_ANY);
-    foundmonthList = new wxListBox(listPanel, wxID_ANY);
-    foundyearList = new wxListBox(listPanel,wxID_ANY);
+    foundDescriptionActList = new wxListBox(listPanel, wxID_ANY);
+    foundBeginList = new wxListBox(listPanel, wxID_ANY);
+    foundEndList = new wxListBox(listPanel, wxID_ANY);
+    foundDayList = new wxListBox(listPanel, wxID_ANY);
+    foundMonthList = new wxListBox(listPanel, wxID_ANY);
+    foundYearList = new wxListBox(listPanel, wxID_ANY);
     listPanel->Hide();
 }
 
 
-void MainFrame::Setupsizers() {
+void MainFrame::SetupSizers() {
     wxBoxSizer* mainSizer = new wxBoxSizer(wxVERTICAL);
 
     wxBoxSizer* Sizer = new wxBoxSizer(wxVERTICAL);
@@ -87,7 +87,7 @@ void MainFrame::Setupsizers() {
     wxBoxSizer* subsubsubSizer = new wxBoxSizer(wxHORIZONTAL);
     subsubsubSizer->Add(desActivityList,wxSizerFlags().Expand().Proportion(5));
     subsubsubSizer->AddSpacer(3);
-    subsubsubSizer->Add(begtimeList,wxSizerFlags().Expand().Proportion(1));
+    subsubsubSizer->Add(begTimeList, wxSizerFlags().Expand().Proportion(1));
     subsubsubSizer->AddSpacer(3);
     subsubsubSizer->Add(endTimeList,wxSizerFlags().Expand().Proportion(1));
     subsubsubSizer->AddSpacer(3);
@@ -113,9 +113,9 @@ void MainFrame::Setupsizers() {
     wxGridSizer* outSizer = new wxGridSizer(1);
     outSizer->Add(Sizer, wxSizerFlags().Border(wxALL, 25).Expand());
 
-    AddActivityPanel->SetSizer(Sizer);
+    addActivityPanel->SetSizer(Sizer);
 
-    mainSizer->Add(AddActivityPanel, 1, wxEXPAND | wxALL, 5);
+    mainSizer->Add(addActivityPanel, 1, wxEXPAND | wxALL, 5);
     mainSizer->Add(listPanel, 1, wxEXPAND | wxALL, 5);
 
     mainPanel->SetSizer(mainSizer);
@@ -124,22 +124,22 @@ void MainFrame::Setupsizers() {
     mainSizer->Layout();
 }
 
-void MainFrame::Setupfoundsizers() {
+void MainFrame::SetupFoundSizers() {
     wxBoxSizer* Sizer = new wxBoxSizer(wxVERTICAL);
 
-    Sizer->Add(explainingtext);
+    Sizer->Add(explainingText);
     wxBoxSizer* subSizer = new wxBoxSizer(wxHORIZONTAL);
-    subSizer->Add(founddescriptionActList,wxSizerFlags().Expand().Proportion(3));
+    subSizer->Add(foundDescriptionActList, wxSizerFlags().Expand().Proportion(3));
     subSizer->AddSpacer(3);
-    subSizer->Add(foundbeginList,wxSizerFlags().Expand().Proportion(1));
+    subSizer->Add(foundBeginList, wxSizerFlags().Expand().Proportion(1));
     subSizer->AddSpacer(3);
-    subSizer->Add(foundendList,wxSizerFlags().Expand().Proportion(1));
+    subSizer->Add(foundEndList, wxSizerFlags().Expand().Proportion(1));
     subSizer->AddSpacer(3);
-    subSizer->Add(founddayList,wxSizerFlags().Expand().Proportion(1));
+    subSizer->Add(foundDayList, wxSizerFlags().Expand().Proportion(1));
     subSizer->AddSpacer(3);
-    subSizer->Add(foundmonthList,wxSizerFlags().Expand().Proportion(1));
+    subSizer->Add(foundMonthList, wxSizerFlags().Expand().Proportion(1));
     subSizer->AddSpacer(3);
-    subSizer->Add(foundyearList,wxSizerFlags().Expand().Proportion(1));
+    subSizer->Add(foundYearList, wxSizerFlags().Expand().Proportion(1));
     subSizer->AddSpacer(3);
     Sizer->Add(subSizer, wxSizerFlags().Expand().Proportion(1));
     Sizer->AddSpacer(25);
@@ -185,7 +185,7 @@ void MainFrame::ClearButtonClicked(const wxCommandEvent &evt) {
     int result = dialog.ShowModal();
     if(result == wxID_YES){
         desActivityList->Clear();
-        begtimeList->Clear();
+        begTimeList->Clear();
         endTimeList->Clear();
         dayList->Clear();
         monthList->Clear();
@@ -200,28 +200,28 @@ void MainFrame::FindActivities(wxCommandEvent &evt) {
     int year = findYear->GetValue();
     try{
     Data tempday(day,month,year);
-    if(tempday.dataValida(day,month,year)){
-            foundActivities = registro.comparedates(tempday);
-            if (!foundActivities.empty()) {
-                for (const auto &act: foundActivities) {
-                    founddescriptionActList->Append(act.getDescription());
-                    int beginTime = act.getBegin();
-                    int endTime = act.getAnEnd();
-                    wxString formattedBegin = secondsToHMS(beginTime);
-                    wxString formattedEnd = secondsToHMS(endTime);
-                    foundbeginList->Append(formattedBegin);
-                    foundendList->Append(formattedEnd);
-                    founddayList->Append(std::to_string(act.getDay().getGiorno()));
-                    foundmonthList->Append(std::to_string(act.getDay().getMese()));
-                    foundyearList->Append(std::to_string(act.getDay().getAnno()));
-                }
-                AddActivityPanel->Hide();
-                listPanel->Show();
-                mainPanel->Layout();
+    if(tempday.dataValida(day,month,year)) {
+        foundActivities = registro.compareDates(tempday);
+        if (!foundActivities.empty()) {
+            for (const auto &act: foundActivities) {
+                foundDescriptionActList->Append(act.getDescription());
+                int beginTime = act.getBegin();
+                int endTime = act.getAnEnd();
+                wxString formattedBegin = secondsToHMS(beginTime);
+                wxString formattedEnd = secondsToHMS(endTime);
+                foundBeginList->Append(formattedBegin);
+                foundEndList->Append(formattedEnd);
+                foundDayList->Append(std::to_string(act.getDay().getGiorno()));
+                foundMonthList->Append(std::to_string(act.getDay().getMese()));
+                foundYearList->Append(std::to_string(act.getDay().getAnno()));
             }
-            } else {
-                wxMessageBox("non attività presenti con questa data");
-            }
+            addActivityPanel->Hide();
+            listPanel->Show();
+            mainPanel->Layout();
+        } else {
+            wxMessageBox("non attività presenti con questa data");
+        }
+    }
     }catch (const std::invalid_argument& e) {
         wxMessageBox(wxString::Format("Errore durante l'inizializzazione: %s", e.what()));
     }
@@ -232,15 +232,15 @@ void MainFrame::FindActivities(wxCommandEvent &evt) {
 }
 
 void MainFrame::BackButtonClicked(wxCommandEvent &evt) {
-    founddescriptionActList->Clear();
-    foundbeginList->Clear();
-    foundendList->Clear();
-    founddayList->Clear();
-    foundmonthList->Clear();
-    foundyearList->Clear();
+    foundDescriptionActList->Clear();
+    foundBeginList->Clear();
+    foundEndList->Clear();
+    foundDayList->Clear();
+    foundMonthList->Clear();
+    foundYearList->Clear();
     foundActivities.clear();
     listPanel->Hide();
-    AddActivityPanel->Show();
+    addActivityPanel->Show();
     mainPanel->Layout();
 }
 
@@ -251,7 +251,7 @@ void MainFrame::WindowClosed(wxCloseEvent &evt) {
     for (int i = 0; i < count; i++) {
         // Extract data from each list at index i
         wxString description = desActivityList->GetString(i);
-        std::string begtimeStr = begtimeList->GetString(i).ToStdString();
+        std::string begtimeStr = begTimeList->GetString(i).ToStdString();
         std::string endtimeStr = endTimeList->GetString(i).ToStdString();
 
         // Parsing the hh:mm:ss format for begin time
@@ -308,7 +308,7 @@ void MainFrame::addActivity() {
             int Bminutes = btime.GetMinute();
             int Bseconds = btime.GetSecond();
             wxString BtimeString = wxString::Format("%02d:%02d:%02d", Bhours, Bminutes, Bseconds);
-            begtimeList->Insert(BtimeString, begtimeList->GetCount());
+            begTimeList->Insert(BtimeString, begTimeList->GetCount());
             int Ehours = etime.GetHour();    // Ottieni l'ora
             int Eminutes = etime.GetMinute(); // Ottieni i minuti
             int Eseconds = etime.GetSecond(); // Ottieni i secondi
@@ -348,7 +348,7 @@ void MainFrame::deleteSelActivity() {
         Data dat(day, month, year);
 
         // Estrarre l'orario di inizio (hh:mm:ss) e convertirlo in secondi
-        wxString btimeString = begtimeList->GetString(selectedIndex);
+        wxString btimeString = begTimeList->GetString(selectedIndex);
         long Bhours, Bminutes, Bseconds;
         btimeString.BeforeFirst(':').ToLong(&Bhours);
         btimeString.AfterFirst(':').BeforeFirst(':').ToLong(&Bminutes);
@@ -366,7 +366,7 @@ void MainFrame::deleteSelActivity() {
         int endtimeInSeconds = (Ehours * 3600) + (Eminutes * 60) + Eseconds;
         Activity act(desActivityList->GetString(selectedIndex).ToStdString(), begintimeInSeconds,endtimeInSeconds,dat);
         desActivityList->Delete(selectedIndex);
-        begtimeList->Delete(selectedIndex);
+        begTimeList->Delete(selectedIndex);
         endTimeList->Delete(selectedIndex);
         dayList->Delete(selectedIndex);
         monthList->Delete(selectedIndex);
@@ -376,7 +376,7 @@ void MainFrame::deleteSelActivity() {
 }
 
 
-void MainFrame::Addfromsaved() {
+void MainFrame::addFromSaved() {
     vector<Activity>tempVec = loadFile("activities.txt");
     for(const auto act : tempVec) {
         registro.addActivity(act);
@@ -390,7 +390,7 @@ void MainFrame::Addfromsaved() {
         int Bminutes = (beginTimestamp % 3600) / 60;
         int Bseconds = beginTimestamp % 60;
         wxString beginTimeWx = wxString::Format("%02d:%02d:%02d", Bhours, Bminutes, Bseconds);
-        begtimeList->Insert(beginTimeWx,index);// task.getBegin() restituisce un intero (es: secondi)
+        begTimeList->Insert(beginTimeWx, index);// task.getBegin() restituisce un intero (es: secondi)
         int endTimestamp = task.getAnEnd();
         int Ehours = endTimestamp / 3600;
         int Eminutes = (endTimestamp % 3600) / 60;
@@ -406,10 +406,10 @@ void MainFrame::Addfromsaved() {
     }
 }
 
-void MainFrame::saveFile(const std::vector<Activity> &activities, const std::string &filename) {
+void MainFrame::saveFile(const std::vector<Activity> &lists, const std::string &filename) {
     std::ofstream ostream(filename);
-    ostream << activities.size();
-    for (const Activity& activity : activities) {
+    ostream << lists.size();
+    for (const Activity& activity : lists) {
         std::string description = activity.getDescription();
         std::replace(description.begin(), description.end(), ' ', '_');
         ostream << '\n' << description << ' ' << activity.getBegin() << ' ' << activity.getAnEnd() << ' ' << activity.getDay().getGiorno() << ' ' << activity.getDay().getMese() << ' ' << activity.getDay().getAnno();

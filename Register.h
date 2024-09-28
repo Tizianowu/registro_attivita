@@ -11,7 +11,7 @@ class Register {
 public:
     Register(const string &title);
 
-    vector<Activity> comparedates(const Data& compareDay);
+    vector<Activity> compareDates(const Data& compareDay);
 
     void addActivity(Activity act){
         activities.push_back(act);
@@ -28,7 +28,7 @@ public:
 private:
 
     vector<Activity> activities;
-    string registername;
+    string registerName;
     vector<Activity> temporaryVec;
 };
 
