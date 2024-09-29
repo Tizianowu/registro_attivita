@@ -17,3 +17,15 @@
 5	24	1726313309801108929	CMakeFiles/registro_attivita.dir/main.cpp.o	80804fa66ff7bbbe
 8	564	1727118012420211596	testing/CMakeFiles/UnitTest.dir/DayTest.cpp.o	41a023dfa28e5f2d
 8	608	1727118778848625121	testing/CMakeFiles/UnitTest.dir/RegisterTest.cpp.o	715cd850cd8897d6
+6	482	1727525527792128638	testing/CMakeFiles/UnitTest.dir/__/Activity.cpp.o	e980fe0b6ee88f22
+7	535	1727525527792397340	testing/CMakeFiles/UnitTest.dir/__/Register.cpp.o	161871dbc9c01867
+7	717	1727525527792560253	testing/CMakeFiles/UnitTest.dir/ActivityTest.cpp.o	26236dc5a7afc8d5
+7	800	1727525527792683875	testing/CMakeFiles/UnitTest.dir/RegisterTest.cpp.o	715cd850cd8897d6
+800	1007	1727525528586041900	testing/UnitTest	f62c347331c38fac
+16	643	1727642812067530096	testing/CMakeFiles/UnitTest.dir/__/Register.cpp.o	161871dbc9c01867
+17	787	1727642812068422512	testing/CMakeFiles/UnitTest.dir/RegisterTest.cpp.o	715cd850cd8897d6
+787	1047	1727642812838349167	testing/UnitTest	f62c347331c38fac
+6	357	1727642822008285170	CMakeFiles/registro_attivita.dir/Register.cpp.o	885472d2d7db27d5
+5	1065	1727642822007586045	CMakeFiles/registro_attivita.dir/App.cpp.o	99f61dff006bda01
+6	1250	1727642822007876754	CMakeFiles/registro_attivita.dir/Mainframe.cpp.o	d95b929eb27b29e2
+1251	1373	1727642823252857387	registro_attivita	3452eea018b15971

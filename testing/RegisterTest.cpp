@@ -65,3 +65,19 @@ TEST_F(RegisterTest, ClearActivities) {
     std::vector<Activity> activities = registerInstance->compareDates(day);
     ASSERT_EQ(activities.size(), 0);
 }
+
+TEST_F(RegisterTest, FindActivity) {
+    Data day(13, 9, 2024);
+    Activity activityToFind("Activity to Find", 10, 12, day);
+    Activity activityNotInRegister("Non-existing Activity", 14, 16, day);
+
+    registerInstance->addActivity(activityToFind);
+
+    // Verifica che l'attività aggiunta sia trovata
+    bool found = registerInstance->findActivity(activityToFind);
+    EXPECT_TRUE(found);
+
+    // Verifica che un'attività non aggiunta non venga trovata
+    bool notFound = registerInstance->findActivity(activityNotInRegister);
+    EXPECT_FALSE(notFound);
+}

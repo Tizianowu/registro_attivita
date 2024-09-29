@@ -12,15 +12,13 @@ public:
     Register(const string &title);
 
     vector<Activity> compareDates(const Data& compareDay);
+    void deleteSelectedActivity(Activity act);
+    int sizeOfRegister();
+    bool findActivity(Activity act);
+
 
     void addActivity(Activity act){
         activities.push_back(act);
-    }
-    void deleteSelectedActivity(Activity act){
-        auto it = std::find(activities.begin(), activities.end(), act);
-        if (it != activities.end()) {
-            activities.erase(it);
-        }
     }
     void clearActivities(){
         activities.clear();
