@@ -201,7 +201,7 @@ void MainFrame::FindActivities(wxCommandEvent &evt) {
     try{
     Data tempday(day,month,year);
     if(tempday.dataValida(day,month,year)) {
-        foundActivities = registro.compareDates(tempday);
+        foundActivities = registro.searchByDate(tempday);
         if (!foundActivities.empty()) {
             for (const auto &act: foundActivities) {
                 foundDescriptionActList->Append(act.getDescription());

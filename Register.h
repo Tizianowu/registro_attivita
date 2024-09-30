@@ -4,6 +4,7 @@
 
 #ifndef REGISTRO_ATTIVITA_REGISTER_H
 #define REGISTRO_ATTIVITA_REGISTER_H
+
 #include <vector>
 #include "Activity.h"
 
@@ -11,23 +12,26 @@ class Register {
 public:
     Register(const string &title);
 
-    vector<Activity> compareDates(const Data& compareDay);
-    void deleteSelectedActivity(Activity act);
-    int sizeOfRegister();
-    bool findActivity(Activity act);
+    vector<Activity> searchByDate(const Data &compareDay);
+
+    void deleteSelectedActivity(const Activity& act);
+
+    int sizeOfRegister() const;
+
+    bool findActivity(const Activity &act) const;
 
 
-    void addActivity(Activity act){
+    void addActivity(const Activity& act) {
         activities.push_back(act);
     }
-    void clearActivities(){
+
+    void clearActivities() {
         activities.clear();
     };
 private:
 
     vector<Activity> activities;
     string registerName;
-    vector<Activity> temporaryVec;
 };
 
 #endif //REGISTRO_ATTIVITA_REGISTER_H
